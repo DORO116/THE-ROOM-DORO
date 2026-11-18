@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>THE ROOM - Escena 1</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body class="escena">
+
+    <div class="parpadeo"></div>
+    <div class="lluvia" id="lluvia"></div>
+
+     Sonido de lluvia
+    <audio id="sonido" loop>
+        <source src="" type="audio/mpeg">
+    </audio>
+
+    <header class="encabezado">
+        <p id="texto"></p>
+    </header>
+
+    <div class="botones-decision" id="botones">
+        <a href="ventana.html" class="boton">Mirar por la ventana</a>
+        <a href="pasillo.html" class="boton">Salir del cuarto</a>
+    </div>
+
+    <script>
+        const textoCompleto = "Abres los ojos. El cuarto huele a humedad y a lluvia. La lámpara parpadea... algo no está bien aquí.";
+        const elementoTexto = document.getElementById('texto');
+        const botones = document.getElementById('botones');
+        let i = 0;
+
+        function escribir() {
+            if (i < textoCompleto.length) {
+                elementoTexto.textContent += textoCompleto[i];
+                i++;
+                setTimeout(escribir, 35);
+            } else {
+                botones.classList.add('mostrar');
+            }
+        }
+        escribir();
+
+        // LLUVIA 
+        const lluvia = document.getElementById('lluvia');
+        for (let j = 0; j < 80; j++) {
+            const gota = document.createElement('span');
+            gota.style.left = Math.random() * 100 + 'vw';
+            gota.style.animationDuration = (Math.random() * 0.5 + 0.5) + 's';
+            gota.style.animationDelay = Math.random() * 2 + 's';
+            lluvia.appendChild(gota);
+        }
+
+    </script>
+</body>
+</html>
