@@ -1,8 +1,4 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
     font-family: 'Georgia', serif;
@@ -12,16 +8,19 @@ body {
     overflow: hidden;
 }
 
-.pantalla-inicio {
-    height: 100vh;
-
+.fondo {
+    position: fixed;
+    inset: 0;
     background-image: url('fondo1.png');
-    
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
+    z-index: 0;
+}
 
-    /* Oscurece un poco la imagen para que se lean las letras */
+.pantalla-inicio {
+    position: relative;
+    z-index: 10;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -29,17 +28,14 @@ body {
     text-align: center;
     gap: 20px;
     padding: 20px;
-
-    /* Sombra oscura encima de la foto */
     background-color: rgba(0, 0, 0, 0.45);
-    background-blend-mode: darken;
 }
 
 .pantalla-inicio h1 {
     font-size: 90px;
     font-weight: 400;
     letter-spacing: 15px;
-    text-shadow: 0 0 20px rgba(0, 0, 0, 0.9), 0 0 40px rgba(255, 255, 255, 0.2);
+    text-shadow: 0 0 20px rgba(0,0,0,0.9);
     animation: aparecer 2s ease-in-out;
 }
 
@@ -71,18 +67,71 @@ body {
     box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
 }
 
+.tip {
+    font-size: 12px;
+    opacity: 0.6;
+    letter-spacing: 1px;
+}
+
+.btn-sonido {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    z-index: 30;
+    background: rgba(0,0,0,0.6);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.4);
+    padding: 8px 14px;
+    cursor: pointer;
+    font-size: 13px;
+    border-radius: 20px;
+}
+
 @keyframes aparecer {
     from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* Para celular */
+.parpadeo {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle, rgba(255, 255, 180, 0.18), transparent 60%);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 5;
+    animation: parpadear 18s infinite;
+}
+
+@keyframes parpadear {
+    0%, 92%, 94%, 96%, 100% { opacity: 0; }
+    93%, 95% { opacity: 1; }
+}
+
+.lluvia { position: fixed; inset: 0; pointer-events: none; z-index: 6; overflow: hidden; }
+.lluvia span {
+    position: absolute;
+    top: -20px;
+    width: 1px;
+    height: 70px;
+    background: rgba(255,255,255,0.4);
+    animation: caer linear infinite;
+}
+@keyframes caer { to { transform: translateY(110vh); } }
+
+/* ESCENA 1*/ 
+body.escena { background-image: url('fondo1.png'); background-size: cover; background-position: center; }
+.encabezado {
+    position: absolute; top: 0; left: 0; width: 100%;
+    background: rgba(0,0,0,0.65); padding: 22px 30px; min-height: 80px; z-index: 10;
+}
+.encabezado p { color: white; font-size: 20px; line-height: 1.5; text-align: center; }
+.botones-decision {
+    position: absolute; bottom: 60px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 20px; opacity: 0; pointer-events: none; transition: opacity 1s ease; z-index: 10;
+}
+.botones-decision.mostrar { opacity: 1; pointer-events: auto; }
+
 @media (max-width: 600px) {
-    .pantalla-inicio h1 {
-        font-size: 48px;
-        letter-spacing: 8px;
-    }
-    .descripcion {
-        font-size: 17px;
-    }
+    .pantalla-inicio h1 { font-size: 48px; letter-spacing: 8px; }
+    .descripcion { font-size: 17px; }
 }
