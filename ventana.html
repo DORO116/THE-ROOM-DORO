@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>THE ROOM - Ventana</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body class="escena">
+
+    <div class="transicion" id="transicion"></div>
+
+    <div class="lluvia" id="lluvia"></div>
+
+    <audio id="sonido" loop>
+        
+        <source src="" type="audio/mpeg">
+    </audio>
+
+    <header class="encabezado">
+        <p id="texto"></p>
+    </header>
+
+    <div class="botones-decision" id="botones">
+        <a href="escena1.html" class="boton transicion-link">Volver a la cama</a>
+        <a href="pasillo.html" class="boton transicion-link">Salir por la ventana</a>
+    </div>
+
+    <script>
+        const textoCompleto = "Te acercas a la ventana. La calle está vacía, solo se escucha la lluvia. Hay algo parado bajo el faro... pero cuando parpadeas, ya no está.";
+        const elementoTexto = document.getElementById('texto');
+        const botones = document.getElementById('botones');
+        let i = 0;
+        function escribir() {
+            if (i < textoCompleto.length) {
+                elementoTexto.textContent += textoCompleto[i];
+                i++;
+                setTimeout(escribir, 35);
+            } else {
+                botones.classList.add('mostrar');
+            }
+        }
+        escribir();
+        const lluvia = document.getElementById('lluvia');
+        for (let j = 0; j < 90; j++) {
+            const gota = document.createElement('span');
+            gota.style.left = Math.random() * 100 + 'vw';
+            gota.style.animationDuration = (Math.random() * 0.6 + 0.5) + 's';
+            gota.style.animationDelay = Math.random() * 2 + 's';
+            lluvia.appendChild(gota);
+        }
+
+        const sonido = document.getElementById('sonido');
+        sonido.volume = 0.35;
+        sonido.play().catch(() => {
+            document.addEventListener('click', () => sonido.play(), { once: true });
+        });
+
+        document.querySelectorAll('.transicion-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const destino = link.getAttribute('href');
+                document.getElementById('transicion').classList.add('cerrar');
+                setTimeout(() => { window.location.href = destino; }, 800);
+            });
+        });
+    </script>
+</body>
+</html>
