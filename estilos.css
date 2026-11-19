@@ -119,7 +119,16 @@ body {
 @keyframes caer { to { transform: translateY(110vh); } }
 
 /* ESCENA 1*/ 
-body.escena { background-image: url('fondo1.png'); background-size: cover; background-position: center; }
+body.escena { 
+    background-image: url('fondo1.png'); background-size: cover; background-position: center;
+}
+body.ventana-fondo {
+    background-image: url('ventana.png'); background-size: cover; background-position: center;
+}
+
+body.pasillo-fondo {
+    background-image: url('pasillo.png'); background-size: cover; background-position: center;
+}
 .encabezado {
     position: absolute; top: 0; left: 0; width: 100%;
     background: rgba(0,0,0,0.65); padding: 22px 30px; min-height: 80px; z-index: 10;
