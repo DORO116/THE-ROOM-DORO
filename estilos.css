@@ -16,17 +16,6 @@ body {
     background-position: center;
     z-index: 0;
 }
-body.escena {
-    background-image: url('fondo1.png');
-}
-
-body.ventana-fondo {
-    background-image: url('ventana.png');
-}
-
-body.pasillo-fondo {
-    background-image: url('pasillo.png');
-}
 
 .pantalla-inicio {
     position: relative;
