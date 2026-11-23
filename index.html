@@ -10,10 +10,10 @@
     <div class="fondo"></div>
     <div class="parpadeo"></div>
     <div class="lluvia" id="lluvia"></div>
-    <audio id="sonido" loop preload="auto">
 
-        <!-- BUSCAR SONIDO DE LLUVIA: -->
-        <source src="" type="audio/mpeg">
+    <audio id="sonido" loop preload="auto">
+        
+        <source src="lluvia.mp3" type="audio/mpeg">
     </audio>
 
     <button id="btnSonido" class="btn-sonido"> Sonido: Apagado</button>
@@ -33,30 +33,31 @@
         const sonido = document.getElementById('sonido');
         const btnSonido = document.getElementById('btnSonido');
         sonido.volume = 0.35;
-        let sonando = false;
-
-        function prenderSonido() {
-            if (!sonando) {
-                sonido.play().then(() => {
-                    sonando = true;
-                    btnSonido.textContent = '🔊 Sonido: Encendido';
-                    document.querySelector('.tip').style.display = 'none';
-                }).catch(() => {});
-            }
-        }
-
-        document.addEventListener('click', prenderSonido, { once: false });
-
         btnSonido.addEventListener('click', (e) => {
             e.stopPropagation();
-            if (sonando) {
-                sonido.pause();
-                sonando = false;
-                btnSonido.textContent = '🔇 Sonido: Apagado';
+
+            if (sonido.paused) {
+                sonido.play().then(() => {
+                    btnSonido.textContent = ' Sonido: Encendido';
+                    localStorage.setItem('sonidoEncendido', '1');
+                }).catch((err) => {
+                    console.log('No se pudo reproducir:', err);
+                    alert('No se encontró lluvia.mp3, revisa que esté en la misma carpeta y se llame exactamente así');
+                });
             } else {
-                prenderSonido();
+                sonido.pause();
+                btnSonido.textContent = ' Sonido: Apagado';
+                localStorage.setItem('sonidoEncendido', '0');
             }
         });
+
+        if (localStorage.getItem('sonidoEncendido') === '1') {
+            sonido.play().then(() => {
+                btnSonido.textContent = ' Sonido: Encendido';
+            }).catch(() => {});
+        }
+
+        // Lluvia
         const lluvia = document.getElementById('lluvia');
         for (let i = 0; i < 90; i++) {
             const gota = document.createElement('span');
@@ -66,17 +67,6 @@
             gota.style.opacity = Math.random() * 0.5 + 0.2;
             lluvia.appendChild(gota);
         }
-        
-body.escena3 {
-    background-image: url('.png');
-    background-size: cover;
-    background-position: center;
-}
-body.jardin {
-    background-image: url('jardin.png');
-    background-size: cover;
-    background-position: center;
-}
     </script>
 </body>
 </html>
