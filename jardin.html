@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE ROOM - Jardín</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body class="escena jardin">
+
+    <div class="parpadeo"></div>
+    <div class="lluvia" id="lluvia"></div>
+
+    <audio id="sonido" loop preload="auto">
+        <source src="lluvia.mp3" type="audio/mpeg">
+    </audio>
+
+    <button id="btnSonido" class="btn-sonido"> Sonido: Apagado</button>
+
+    <div class="encabezado">
+        <p id="texto">Sales al jardín. El pasto está mojado, la lluvia no para y la casa se ve enorme detrás de ti...</p>
+    </div>
+
+    <div class="botones-decision" id="botones">
+        <a href="calle.html" class="boton">Avanzar a la calle</a>
+        <a href="patio.html" class="boton">Rodear el patio</a>
+    </div>
+
+<script>
+    const sonido = document.getElementById('sonido');
+    const btnSonido = document.getElementById('btnSonido');
+    sonido.volume = 0.35;
+
+    if (localStorage.getItem('sonidoEncendido') === '1') {
+        sonido.play().then(() => { btnSonido.textContent = ' Sonido: Encendido'; }).catch(()=>{});
+    }
+
+    btnSonido.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (sonido.paused) {
+            sonido.play().then(() => {
+                btnSonido.textContent = ' Sonido: Encendido';
+                localStorage.setItem('sonidoEncendido', '1');
+            });
+        } else {
+            sonido.pause();
+            btnSonido.textContent = ' Sonido: Apagado';
+            localStorage.setItem('sonidoEncendido', '0');
+        }
+    });
+
+    setTimeout(() => {
+        document.getElementById('botones').classList.add('mostrar');
+    }, 3000);
+
+    const lluvia = document.getElementById('lluvia');
+    for (let i = 0; i < 90; i++) {
+        const gota = document.createElement('span');
+        gota.style.left = Math.random() * 100 + 'vw';
+        gota.style.animationDuration = (Math.random() * 0.6 + 0.5) + 's';
+        gota.style.animationDelay = Math.random() * 2 + 's';
+        lluvia.appendChild(gota);
+    }
+</script>
+</body>
+</html>
