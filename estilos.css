@@ -167,3 +167,13 @@ body.pasillo-fondo {
 body.pasillo {
     filter: brightness(0.7);
 }
+body.escena3 {
+    background-image: url('fondo3.png');
+    background-size: cover;
+    background-position: center;
+}
+body.jardin {
+    background-image: url('jardin.png');
+    background-size: cover;
+    background-position: center;
+}
