@@ -12,7 +12,6 @@
     <div class="lluvia" id="lluvia"></div>
 
     <audio id="sonido" loop preload="auto">
-        
         <source src="lluvia.mp3" type="audio/mpeg">
     </audio>
 
@@ -33,12 +32,13 @@
         const sonido = document.getElementById('sonido');
         const btnSonido = document.getElementById('btnSonido');
         sonido.volume = 0.35;
+
         btnSonido.addEventListener('click', (e) => {
             e.stopPropagation();
 
             if (sonido.paused) {
                 sonido.play().then(() => {
-                    btnSonido.textContent = ' Sonido: Encendido';
+                    btnSonido.textContent = 'Sonido: Encendido';
                     localStorage.setItem('sonidoEncendido', '1');
                 }).catch((err) => {
                     console.log('No se pudo reproducir:', err);
